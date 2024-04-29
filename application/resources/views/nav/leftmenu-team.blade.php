@@ -29,10 +29,9 @@
                 <li data-modular-id="main_menu_team_leads"
                     class="sidenav-menu-item {{ $page['mainmenu_leads'] ?? '' }} menu-tooltip menu-with-tooltip"
                     title="{{ cleanLang(__('lang.leads')) }}">
-                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0);" z-href="/leads" aria-expanded="false">
+                    <a class="has-arrow waves-effect waves-dark" href="{{ _url('/leads') }}" aria-expanded="false">
                         <i class="sl-icon-call-in"></i>
-                        <span class="hide-menu">{{ cleanLang(__('lang.leads')) }}
-                        </span>
+                        <span class="hide-menu">{{ cleanLang(__('lang.leads')) }}</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         @foreach (\App\Models\LeadStatus::all() as $status)
@@ -42,9 +41,25 @@
                         @endforeach
                     </ul>
                 </li>
-                @endif
+            @endif
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var menuItem = document.querySelector('[data-modular-id="main_menu_team_leads"]');
+                    var subMenu = menuItem.querySelector('ul');
+            
+                    menuItem.addEventListener('click', function(event) {
+                        // Check if the clicked element is the submenu or its child
+                        if (event.target !== subMenu && !subMenu.contains(event.target)) {
+                            // Redirect to the leads page
+                            window.location.href = menuItem.querySelector('a').getAttribute('href');
+                        }
+                    });
+                });
+            </script>
+            
 
-                <!--leads-->
+                <!--leads-->    
 
 
                 <!--users[done]-->
